@@ -1,0 +1,41 @@
+/* 要素セレクター */
+p {
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* クラスセレクター */
+.overview {
+    color: #333;
+    border-left: 4px solid #3498db;
+    padding: 5px;
+}
+
+/* IDセレクター */
+#firsttitle {
+    color: #3498db;
+    font-weight: bold;
+}
+
+/* 子孫セレクター */
+section p {
+    background-color: #eee;
+}
+
+/* 疑似クラス */
+a:link {
+    color: #0000ff;
+}
+a:hover {
+    color: #ff0000;
+}
+a:visited {
+    color: #999999
+}
+
+body {
+    background-color: #f0f0f0;
+    background-image: url('background.jpg');
+}
