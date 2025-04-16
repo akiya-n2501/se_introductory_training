@@ -1,33 +1,40 @@
 // タスクのデータを保持する配列
-let tasks = [];
+const API_URL = 'http://127.0.0.1:5000/tasks'
 
 // タスク一覧を表示
-const renderTasks = () => {
-    const taskList = document.getElementById('task-list'); // タスクリストの表示部分を取得
-    taskList.innerHTML = ''; // 一旦、リストを空にする
+const renderTasks = async () => {
+    const res = await fetch(API_URL);
+    const tasks = await res.json();
+    const taskList = document.getElementById('task-list');
+    taskList.innerHTML = '';
 
-    tasks.forEach((task, index) => {
+    tasks.forEach(task => {
         const li = document.createElement('li'); // 新しいリスト項目を作る
         li.innerHTML = `
-            <span>${task}</span>
-            <button onclick="deleteTask(${index})">削除</button>
+            <span>${task.title}</span>
+            <button onclick="deleteTask(${task.id})">削除</button>
         `;
         taskList.appendChild(li); // 作ったリスト項目を表示部分に追加
     });
 }
 
 // 新しいタスクを追加
-document.getElementById('add-task').addEventListener('click', () => {
+document.getElementById('add-task').addEventListener('click', async () => {
     const title = document.getElementById('new-task').value.trim(); // 入力されたタスクを取得
     if (!title) return; // タスクが空白なら何もしない
-    tasks.push(title); // タスクを配列に追加
+    // タスクを追加
+    await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title }),
+    });
     document.getElementById('new-task').value = ''; // 入力欄をクリア
     renderTasks(); // リストを再描画
 });
 
 // タスクを削除
-const deleteTask = (index) => {
-    tasks.splice(index, 1); // 指定されたインデックスのタスクを削除
+const deleteTask = async (id) => {
+    await fetch(`${API_URL}/${id}`, { method: 'DELETE'});
     renderTasks(); // リストを再描画
 }
 
