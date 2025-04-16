@@ -1,6 +1,6 @@
 # 10 backend
 
-start: 10:12
+start: 10:12 ~ 12:00
 
 - REST API 形式
   - 責務分離が可能
